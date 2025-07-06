@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-Based Tic-Tac-Toe Game</title>
+    <!-- Link to Google Fonts for 'Inter' -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic styling for the body */
+        body {
+            font-family: 'Inter', sans-serif; /* Use the Inter font */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            background-color: #f0f2f5; /* Light grey background */
+            color: #333; /* Dark grey text */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        /* Container for the game elements */
+        .game-container {
+            background-color: #ffffff; /* White background for the container */
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            text-align: center;
+            max-width: 500px; /* Max width for larger screens */
+            width: 100%; /* Full width on smaller screens */
+        }
+
+        /* Styling for the main heading */
+        h1 {
+            color: #2c3e50; /* Dark blue-grey color */
+            margin-bottom: 20px;
+            font-size: 2.5em; /* Larger font size */
+            font-weight: 700; /* Bold font weight */
+        }
+
+        /* Styling for the game board display area */
+        #game-board-display {
+            font-family: 'Courier New', monospace; /* Monospace font for consistent spacing */
+            white-space: pre; /* Preserves whitespace and line breaks for board formatting */
+            background-color: #ecf0f1; /* Light grey background */
+            border: 2px solid #bdc3c7; /* Subtle border */
+            padding: 20px;
+            margin: 20px auto; /* Center the board horizontally */
+            border-radius: 10px;
+            font-size: 1.5em; /* Larger font for board characters */
+            line-height: 1.5; /* Spacing between lines */
+            text-align: center;
+            max-width: 300px; /* Max width for the board itself */
+            overflow-x: auto; /* Allows horizontal scrolling if content overflows */
+        }
+
+        /* Styling for messages displayed to the user */
+        #message-display {
+            background-color: #e8f5e9; /* Light green background */
+            color: #28a745; /* Dark green text */
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: 1px solid #d4edda; /* Subtle border */
+        }
+
+        /* Section containing input field and buttons */
+        .input-section {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center items horizontally */
+            gap: 15px; /* Space between elements */
+        }
+
+        /* Styling for labels */
+        .input-section label {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        /* Styling for number input field */
+        .input-section input[type="number"] {
+            padding: 10px 15px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1.1em;
+            width: 80px; /* Fixed width */
+            text-align: center;
+            -moz-appearance: textfield; /* Hide arrows in Firefox */
+        }
+
+        /* Hide default spin buttons for number input in WebKit browsers */
+        .input-section input[type="number"]::-webkit-outer-spin-button,
+        .input-section input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Styling for buttons */
+        .input-section button {
+            background-color: #3498db; /* Blue background */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer; /* Indicate clickable element */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+
+        /* Hover effect for buttons */
+        .input-section button:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        /* Active (click) effect for buttons */
+        .input-section button:active {
+            background-color: #21618c; /* Even darker blue on click */
+            transform: translateY(0); /* Reset lift effect */
+        }
+
+        /* Specific styling for the reset button */
+        .reset-button {
+            background-color: #e74c3c; /* Red background */
+            margin-top: 25px; /* More space above it */
+            display: none; /* Hidden by default */
+        }
+
+        /* Hover effect for reset button */
+        .reset-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Active effect for reset button */
+        .reset-button:active {
+            background-color: #922b21;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            #game-board-display {
+                font-size: 1.2em;
+                padding: 15px;
+            }
+            .input-section input[type="number"],
+            .input-section button {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Text-Based Tic-Tac-Toe</h1>
+        <!-- Div to display the game board -->
+        <div id="game-board-display"></div>
+        <!-- Div to display messages to the player -->
+        <div id="message-display">Welcome! Player X's turn. Enter a number (1-9) to make a move.</div>
+
+        <div class="input-section">
+            <label for="moveInput">Enter your move (1-9):</label>
+            <!-- Input field for player's move -->
+            <input type="number" id="moveInput" min="1" max="9" placeholder="1-9">
+            <!-- Button to submit the move -->
+            <button id="makeMoveButton">Make Move</button>
+            <!-- Button to reset the game, initially hidden -->
+            <button id="resetGameButton" class="reset-button">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Game State Variables (from Design Guide Section 2) ---
+        let board; // Represents the 3x3 game board
+        let currentPlayer; // 'X' or 'O'
+        let gameActive; // Boolean: true if game is ongoing, false otherwise
+
+        // --- Get References to HTML Elements (for UI interaction) ---
+        const boardDisplay = document.getElementById('game-board-display');
+        const messageDisplay = document.getElementById('message-display');
+        const moveInput = document.getElementById('moveInput');
+        const makeMoveButton = document.getElementById('makeMoveButton');
+        const resetGameButton = document.getElementById('resetGameButton');
+
+        /**
+         * Initializes or resets the game board and state.
+         * Corresponds to Design Guide Question 6, 15, 17.
+         */
+        function initializeGame() {
+            // Question 1, 2, 3: Representing the board and empty cells
+            // Initialize the board as a 1D array of 9 empty strings
+            board = ['', '', '', '', '', '', '', '', ''];
+            // Question 4: Player X always starts
+            currentPlayer = 'X';
+            // Question 5: Game is active at start
+            gameActive = true;
+            displayBoard(); // Show the initial empty board
+            // Question 8: Initial prompt
+            setMessage(`Player ${currentPlayer}'s turn. Enter a number (1-9) to make a move.`);
+            moveInput.value = ''; // Clear any previous input
+            moveInput.disabled = false; // Enable input field
+            makeMoveButton.disabled = false; // Enable move button
+            resetGameButton.style.display = 'none'; // Hide "Play Again" button
+        }
+
+        /**
+         * Displays the current state of the Tic-Tac-Toe board in a text format.
+         * Updates both the console and the HTML display.
+         * Corresponds to Design Guide Question 7.
+         */
+        function displayBoard() {
+            // Create a temporary array to show numbers (1-9) for empty cells
+            // This helps the user know which number corresponds to which cell.
+            const displayBoardArr = board.map((cell, index) => cell === '' ? (index + 1) : cell);
+
+            // Format the board into a readable string
+            const boardString = `
+ ${displayBoardArr[0]} | ${displayBoardArr[1]} | ${displayBoardArr[2]}
+---+---+---
+ ${displayBoardArr[3]} | ${displayBoardArr[4]} | ${displayBoardArr[5]}
+---+---+---
+ ${displayBoardArr[6]} | ${displayBoardArr[7]} | ${displayBoardArr[8]}
+            `;
+            console.log(boardString); // Log to browser console (for "text-based" feel)
+            boardDisplay.textContent = boardString; // Update the HTML display
+        }
+
+        /**
+         * Sets the message displayed to the user.
+         * Corresponds to Design Guide Question 10.
+         * @param {string} msg - The message to display.
+         */
+        function setMessage(msg) {
+            messageDisplay.textContent = msg;
+            console.log(msg); // Also log messages to console
+        }
+
+        /**
+         * Handles a player's move.
+         * Corresponds to Design Guide Section 4 and Question 16.
+         * @param {number} cellIndex - The 0-indexed position on the board (0-8).
+         */
+        function handleMove(cellIndex) {
+            // Question 11: Validate move (game active and cell empty)
+            if (!gameActive || board[cellIndex] !== '') {
+                setMessage("Invalid move! That cell is already taken or the game is over. Try again.");
+                return; // Exit the function if move is invalid
+            }
+
+            // Question 12: Update the board with the current player's mark
+            board[cellIndex] = currentPlayer;
+            displayBoard(); // Show the updated board
+
+            // Question 16: Check for win or draw after the move
+            if (checkWin()) {
+                setMessage(`Player ${currentPlayer} wins! Congratulations!`);
+                gameActive = false; // End the game
+                endGame(); // Disable input and show reset button
+            } else if (checkDraw()) {
+                setMessage("It's a draw! No one wins.");
+                gameActive = false; // End the game
+                endGame(); // Disable input and show reset button
+            } else {
+                // If no win or draw, Question 4 & 16: switch to the next player
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                setMessage(`Player ${currentPlayer}'s turn. Enter a number (1-9) to make a move.`);
+            }
+        }
+
+        /**
+         * Checks if the current player has won the game.
+         * Corresponds to Design Guide Question 13.
+         * @returns {boolean} - True if the current player has won, false otherwise.
+         */
+        function checkWin() {
+            // Question 13: Define all possible winning combinations (rows, columns, diagonals)
+            const winCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
+            ];
+
+            // Iterate through each winning combination
+            for (const combo of winCombinations) {
+                const [a, b, c] = combo; // Destructure the combination into three cell indices
+                // Check if all three cells in the combination match the current player's mark
+                if (board[a] === currentPlayer && board[b] === currentPlayer && board[c] === currentPlayer) {
+                    return true; // Found a win!
+                }
+            }
+            return false; // No win found
+        }
+
+        /**
+         * Checks if the game is a draw (board is full and no winner).
+         * Corresponds to Design Guide Question 14.
+         * @returns {boolean} - True if it's a draw, false otherwise.
+         */
+        function checkDraw() {
+            // Question 14: Check if all cells are filled (no empty strings)
+            return board.every(cell => cell !== '');
+        }
+
+        /**
+         * Ends the game by disabling input and showing the reset button.
+         * Corresponds to Design Guide Question 5.
+         */
+        function endGame() {
+            moveInput.disabled = true; // Disable the input field
+            makeMoveButton.disabled = true; // Disable the "Make Move" button
+            resetGameButton.style.display = 'block'; // Show the "Play Again" button
+        }
+
+        // --- Event Listeners (from Design Guide Section 6) ---
+
+        // Event listener for the "Make Move" button click
+        makeMoveButton.addEventListener('click', () => {
+            const move = parseInt(moveInput.value); // Get the input value and convert to integer
+            // Question 11: Validate input range (1-9)
+            if (isNaN(move) || move < 1 || move > 9) {
+                setMessage("Please enter a valid number between 1 and 9.");
+                moveInput.value = ''; // Clear invalid input
+                return;
+            }
+            // Convert 1-9 user input to 0-8 array index
+            handleMove(move - 1);
+            moveInput.value = ''; // Clear input field after a move attempt
+        });
+
+        // Event listener to allow pressing Enter key to make a move
+        moveInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                makeMoveButton.click(); // Simulate a click on the make move button
+            }
+        });
+
+        // Event listener for the "Play Again" button click
+        resetGameButton.addEventListener('click', initializeGame);
+
+        // Initialize the game when the entire page has loaded
+        window.onload = initializeGame;
+    </script>
+</body>
+</html>
