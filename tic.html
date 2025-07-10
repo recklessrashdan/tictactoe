@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe with Score and History</title>
+    <title>Tic-Tac-Toe with Score</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* General Body Styling */
@@ -23,7 +23,7 @@
         }
 
         /* Game Container Styling */
-        .game-container, .history-container {
+        .game-container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 15px;
@@ -100,7 +100,7 @@
         }
 
         /* Button Styling */
-        .input-section button, .history-item button {
+        .input-section button {
             background-color: #3498db;
             color: white;
             padding: 12px 25px;
@@ -112,12 +112,12 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .input-section button:hover, .history-item button:hover {
+        .input-section button:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
         }
 
-        .input-section button:active, .history-item button:active {
+        .input-section button:active {
             background-color: #21618c;
             transform: translateY(0);
         }
@@ -163,60 +163,6 @@
         .score-item.o-score span { color: #2ecc71; } /* Green for O */
         .score-item.draw-score span { color: #f39c12; } /* Orange for Draw */
 
-        /* History Section Styling */
-        .history-container {
-            margin-top: 20px;
-            padding-top: 0; /* Adjust padding as h2 has its own margin */
-        }
-
-        .history-container h2 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.8em;
-            font-weight: 700;
-            padding-top: 20px; /* Space above heading */
-        }
-
-        #game-history-list {
-            list-style: none;
-            padding: 0;
-            max-height: 300px; /* Limit height for scrollability */
-            overflow-y: auto; /* Enable vertical scrolling */
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            background-color: #fdfdfd;
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            font-size: 1em;
-            color: #444;
-        }
-
-        .history-item:last-child {
-            border-bottom: none;
-        }
-
-        .history-item span {
-            flex-grow: 1; /* Allow text to take available space */
-            text-align: left;
-        }
-
-        .history-item button {
-            padding: 8px 15px;
-            font-size: 0.9em;
-            margin-left: 10px;
-            background-color: #1abc9c; /* Teal for replay button */
-        }
-
-        .history-item button:hover {
-            background-color: #16a085;
-        }
-
         /* User ID Display */
         #user-id-display {
             margin-top: 10px;
@@ -227,98 +173,20 @@
             padding: 0 10px;
         }
 
-        /* Replay Modal Styling */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        #replay-board-display {
-            font-family: 'Courier New', monospace;
-            white-space: pre;
-            background-color: #ecf0f1;
-            border: 2px solid #bdc3c7;
-            padding: 20px;
-            margin: 20px auto;
-            border-radius: 10px;
-            font-size: 1.5em;
-            line-height: 1.5;
-            text-align: center;
-            max-width: 300px;
-        }
-
-        #replay-message {
-            font-size: 1.1em;
-            color: #555;
-            margin-bottom: 15px;
-        }
-
-        .replay-controls button {
-            background-color: #555;
-            margin: 5px;
-        }
-        .replay-controls button:hover {
-            background-color: #333;
-        }
-        .replay-controls button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-
         /* Responsive adjustments */
         @media (max-width: 600px) {
-            .game-container, .history-container {
+            .game-container {
                 padding: 20px;
             }
             h1 {
                 font-size: 2em;
             }
-            #game-board-display, #replay-board-display {
+            #game-board-display {
                 font-size: 1.2em;
                 padding: 15px;
             }
             .input-section input[type="number"],
-            .input-section button,
-            .history-item button {
+            .input-section button {
                 font-size: 1em;
                 padding: 10px 20px;
             }
@@ -351,40 +219,17 @@
         </div>
     </div>
 
-    <div class="history-container">
-        <h2>Game History</h2>
-        <ul id="game-history-list">
-            <li>No games played yet.</li>
-        </ul>
-    </div>
-
-    <!-- Replay Modal -->
-    <div id="replayModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Game Replay</h2>
-            <div id="replay-message"></div>
-            <div id="replay-board-display"></div>
-            <div class="replay-controls">
-                <button id="prevMoveButton">Previous</button>
-                <button id="nextMoveButton">Next</button>
-            </div>
-        </div>
-    </div>
-
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Game State Variables ---
         let board;
         let currentPlayer;
         let gameActive;
         let scores = { X: 0, O: 0, Draw: 0 }; // Scores object
-        let movesHistory; // To store moves for the current game before saving
-        let gameHistory = []; // Stores all past games fetched from Firestore
 
         // --- Firebase Variables ---
         let app;
@@ -393,17 +238,6 @@
         let userId = 'loading...'; // Default until authenticated
         let isAuthReady = false; // Flag to ensure Firestore operations wait for auth
         let scoresDocRef; // Reference to the Firestore document storing scores
-
-        // --- Replay Modal Variables ---
-        let replayModal;
-        let replayCloseButton;
-        let replayBoardDisplay;
-        let replayMessage;
-        let prevMoveButton;
-        let nextMoveButton;
-        let currentReplayGame;
-        let currentReplayMoveIndex;
-        let replayAnimationTimeout; // To clear any ongoing replay animation
 
         // --- Get References to HTML Elements ---
         const boardDisplay = document.getElementById('game-board-display');
@@ -415,7 +249,6 @@
         const oWinsDisplay = document.getElementById('o-wins');
         const drawsDisplay = document.getElementById('draws');
         const userIdDisplay = document.getElementById('user-id-display');
-        const gameHistoryList = document.getElementById('game-history-list'); // Re-added for history
 
         /**
          * Initializes Firebase and sets up authentication.
@@ -454,10 +287,9 @@
                         userIdDisplay.textContent = `User ID: ${userId}`;
                         isAuthReady = true;
                         console.log("Firebase Auth Ready. User ID:", userId);
-                        // Load scores and history after authentication is ready
-                        loadScores(appId);
-                        loadGameHistory(appId); // Load game history
-                        initializeGame(); // Initialize game after auth and data loads
+                        // Load scores after authentication is ready
+                        loadScores(appId); // Pass appId to loadScores
+                        initializeGame(); // Initialize game after auth and scores load
                     } else {
                         // User is signed out, attempt anonymous sign-in
                         console.log("No user signed in. Attempting anonymous sign-in...");
@@ -465,7 +297,7 @@
                             await signInAnonymously(auth);
                         } catch (error) {
                             console.error("Firebase Auth Error during anonymous sign-in:", error);
-                            setMessage(`Authentication Error: ${error.message}. Scores and history will not be saved.`);
+                            setMessage(`Authentication Error: ${error.message}. Scores will not be saved.`);
                             userIdDisplay.textContent = `Error getting User ID.`;
                             isAuthReady = false;
                             initializeGame(); // Still initialize game even if auth fails
@@ -474,7 +306,7 @@
                 });
             } catch (error) {
                 console.error("Failed to initialize Firebase (outer catch):", error);
-                setMessage(`Error initializing Firebase: ${error.message}. Scores and history will not be saved.`);
+                setMessage(`Error initializing Firebase: ${error.message}. Scores will not be saved.`);
                 userIdDisplay.textContent = `Error initializing Firebase.`;
                 isAuthReady = false;
                 initializeGame(); // Still initialize game
@@ -488,7 +320,6 @@
             board = ['', '', '', '', '', '', '', '', ''];
             currentPlayer = 'X';
             gameActive = true;
-            movesHistory = []; // Reset moves history for the new game
             displayBoard();
             setMessage(`Player ${currentPlayer}'s turn. Enter a number (1-9) to make a move.`);
             moveInput.value = '';
@@ -536,22 +367,17 @@
             }
 
             board[cellIndex] = currentPlayer;
-            // Record the move for current game's history
-            movesHistory.push({ player: currentPlayer, index: cellIndex });
-
             displayBoard();
 
             if (checkWin()) {
                 setMessage(`Player ${currentPlayer} wins! Congratulations!`);
                 gameActive = false;
                 updateScores(currentPlayer); // Update score for winner
-                saveGameResult(currentPlayer); // Save game to Firestore
                 endGame();
             } else if (checkDraw()) {
                 setMessage("It's a draw! No one wins.");
                 gameActive = false;
                 updateScores('Draw'); // Update score for draw
-                saveGameResult('Draw'); // Save game to Firestore
                 endGame();
             } else {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
@@ -619,9 +445,6 @@
          * Saves the current scores to Firestore.
          */
         async function saveScoresToFirestore() {
-            // Ensure appId is correctly set from firebaseConfig.projectId
-            const currentAppId = app ? app.options.projectId : 'default-app-id';
-
             if (!isAuthReady || !db || !userId || !scoresDocRef) {
                 console.warn("Firebase not ready or user not authenticated. Scores not saved.");
                 setMessage("Scores not saved. Firebase not ready or authentication failed.");
@@ -672,205 +495,6 @@
             });
         }
 
-        /**
-         * Saves the current game result to Firestore.
-         * @param {string} winner - 'X', 'O', or 'Draw'.
-         */
-        async function saveGameResult(winner) {
-            const currentAppId = app ? app.options.projectId : 'default-app-id';
-
-            if (!isAuthReady || !db || !userId) {
-                console.warn("Firebase not ready or user not authenticated. Game result not saved.");
-                setMessage("Game result not saved. Firebase not ready or authentication failed.");
-                return;
-            }
-
-            try {
-                const gamesCollectionRef = collection(db, `artifacts/${currentAppId}/users/${userId}/tic_tac_toe_games`);
-                await addDoc(gamesCollectionRef, {
-                    winner: winner,
-                    timestamp: new Date(), // Store current time
-                    moves: movesHistory, // Store the sequence of moves
-                    finalBoard: board // Store the final state of the board
-                });
-                console.log("Game result saved to Firestore!");
-            } catch (e) {
-                console.error("Error adding document: ", e);
-                setMessage("Error saving game history. Check console for details.");
-            }
-        }
-
-        /**
-         * Loads game history from Firestore and sets up a real-time listener.
-         * @param {string} currentAppId - The project ID to use for the collection path.
-         */
-        function loadGameHistory(currentAppId) {
-            if (!isAuthReady || !db || !userId || !currentAppId) {
-                console.warn("Firebase not ready, user not authenticated, or appId missing. Cannot load history.");
-                return;
-            }
-
-            const gamesCollectionRef = collection(db, `artifacts/${currentAppId}/users/${userId}/tic_tac_toe_games`);
-            const q = query(gamesCollectionRef, orderBy("timestamp", "desc")); // Order by most recent first
-
-            onSnapshot(q, (snapshot) => {
-                gameHistory = []; // Clear current history
-                snapshot.forEach((doc) => {
-                    const gameData = doc.data();
-                    gameHistory.push({ id: doc.id, ...gameData }); // Add document ID and data
-                });
-                displayGameHistory();
-                console.log("Game history loaded/updated from Firestore.");
-            }, (error) => {
-                console.error("Error listening to game history:", error);
-                setMessage("Error loading game history. Check console for details.");
-            });
-        }
-
-        /**
-         * Displays the loaded game history in the HTML list.
-         */
-        function displayGameHistory() {
-            gameHistoryList.innerHTML = ''; // Clear existing list items
-
-            if (gameHistory.length === 0) {
-                gameHistoryList.innerHTML = '<li>No games played yet.</li>';
-                return;
-            }
-
-            gameHistory.forEach((game, index) => {
-                const listItem = document.createElement('li');
-                listItem.classList.add('history-item');
-
-                // Format timestamp
-                const date = game.timestamp.toDate ? game.timestamp.toDate() : new Date(game.timestamp);
-                const formattedDate = date.toLocaleString(); // e.g., "7/10/2025, 6:30:00 PM"
-
-                listItem.innerHTML = `
-                    <span>Game ${gameHistory.length - index}: Winner: ${game.winner} (${formattedDate})</span>
-                    <button data-game-id="${game.id}">Replay</button>
-                `;
-                gameHistoryList.appendChild(listItem);
-            });
-
-            // Add event listeners to replay buttons
-            document.querySelectorAll('.history-item button').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const gameIdToReplay = event.target.dataset.gameId;
-                    const gameToReplay = gameHistory.find(game => game.id === gameIdToReplay);
-                    if (gameToReplay) {
-                        openReplayModal(gameToReplay);
-                    }
-                });
-            });
-        }
-
-        // --- Replay Modal Functions ---
-
-        /**
-         * Initializes replay modal elements.
-         */
-        function initializeReplayModal() {
-            replayModal = document.getElementById('replayModal');
-            replayCloseButton = replayModal.querySelector('.close-button');
-            replayBoardDisplay = document.getElementById('replay-board-display');
-            replayMessage = document.getElementById('replay-message');
-            prevMoveButton = document.getElementById('prevMoveButton');
-            nextMoveButton = document.getElementById('nextMoveButton');
-
-            replayCloseButton.addEventListener('click', closeReplayModal);
-            window.addEventListener('click', (event) => {
-                if (event.target === replayModal) {
-                    closeReplayModal();
-                }
-            });
-
-            prevMoveButton.addEventListener('click', showPreviousReplayMove);
-            nextMoveButton.addEventListener('click', showNextReplayMove);
-        }
-
-        /**
-         * Opens the replay modal with a specific game's data.
-         * @param {Object} gameData - The game object from history.
-         */
-        function openReplayModal(gameData) {
-            currentReplayGame = gameData;
-            currentReplayMoveIndex = -1; // Start before the first move (empty board)
-            replayModal.style.display = 'flex'; // Show modal
-            clearReplayAnimation(); // Clear any previous animation
-            showReplayMove(); // Display initial state
-        }
-
-        /**
-         * Closes the replay modal.
-         */
-        function closeReplayModal() {
-            replayModal.style.display = 'none';
-            clearReplayAnimation();
-            currentReplayGame = null;
-        }
-
-        /**
-         * Displays the current move in the replay.
-         */
-        function showReplayMove() {
-            const tempBoard = ['', '', '', '', '', '', '', '', ''];
-            const moves = currentReplayGame.moves || [];
-
-            // Apply moves up to the current index to the temporary board
-            for (let i = 0; i <= currentReplayMoveIndex; i++) {
-                if (moves[i]) {
-                    tempBoard[moves[i].index] = moves[i].player;
-                }
-            }
-
-            displayBoard(tempBoard); // Use the replay board display
-            replayBoardDisplay.textContent = boardDisplay.textContent; // Copy current board display content
-
-            if (currentReplayMoveIndex === -1) {
-                replayMessage.textContent = "Game Start (Empty Board)";
-            } else if (currentReplayMoveIndex < moves.length) {
-                const currentMove = moves[currentReplayMoveIndex];
-                replayMessage.textContent = `Move ${currentReplayMoveIndex + 1}: Player ${currentMove.player} placed at ${currentMove.index + 1}`;
-            } else {
-                replayMessage.textContent = `Game Over. Winner: ${currentReplayGame.winner}`;
-            }
-
-            // Enable/disable navigation buttons
-            prevMoveButton.disabled = currentReplayMoveIndex <= -1;
-            nextMoveButton.disabled = currentReplayMoveIndex >= moves.length;
-        }
-
-        /**
-         * Shows the previous move in the replay.
-         */
-        function showPreviousReplayMove() {
-            if (currentReplayMoveIndex > -1) {
-                currentReplayMoveIndex--;
-                showReplayMove();
-            }
-        }
-
-        /**
-         * Shows the next move in the replay.
-         */
-        function showNextReplayMove() {
-            if (currentReplayMoveIndex < (currentReplayGame.moves || []).length) {
-                currentReplayMoveIndex++;
-                showReplayMove();
-            }
-        }
-
-        /**
-         * Clears any ongoing replay animation timeout.
-         */
-        function clearReplayAnimation() {
-            if (replayAnimationTimeout) {
-                clearTimeout(replayAnimationTimeout);
-                replayAnimationTimeout = null;
-            }
-        }
-
         // --- Event Listeners ---
         makeMoveButton.addEventListener('click', () => {
             const move = parseInt(moveInput.value);
@@ -895,7 +519,6 @@
         // Initialize Firebase and then the game when the page loads
         window.onload = () => {
             initializeFirebase();
-            initializeReplayModal(); // Setup modal elements and listeners
             displayScores(); // Display initial zero scores before Firebase loads
         };
     </script>
